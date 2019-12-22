@@ -8,7 +8,7 @@ include "../assert/assert.circom";
 include "../constant/maxSignalWidth.circom";
 
 /**
- * Select one of 2^n several signals base on n-bit wide binary index.
+ * Select one of 2^n signals based on n-bit wide binary index.
  *
  * @param n width in bits of the binary index
  * @input index n-bit wide binary index
