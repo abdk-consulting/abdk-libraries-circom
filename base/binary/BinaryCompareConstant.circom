@@ -10,17 +10,17 @@ include "../assert/assert.circom";
  * Compare given binary number of certain width with certain constant value.
  *
  * @param n width in bits of the binary number (must be non-zero)
- * @param threshold threshold to compare binary number with
- * @param l value to return in case binary number is less than the threshold
- * @param e value to return in case binary number is equal to the threshold
- * @param g value to return in case binary number is greater than the threshold
+ * @param c constant to compare binary number with
+ * @param l value to return in case binary number is less than the constant
+ * @param e value to return in case binary number is equal to the constant
+ * @param g value to return in case binary number is greater than the constant
  * @input x n-bit wide binary number
  * @output result l, e, or g in case x is less than, equal to, or greater than
- *         threshold respectively
+ *         the constant respectively
  */
-template BinaryCompareConstant (n, threshold, l, e, g) {
+template BinaryCompareConstant (n, c, l, e, g) {
   assert (n > 0);
-  assert (threshold >> n == 0);
+  assert (c >> n == 0);
 
   signal input x [n];
   signal output result;
@@ -31,10 +31,10 @@ template BinaryCompareConstant (n, threshold, l, e, g) {
     assert (x [i] == 0 || x [i] == 1);
 
     if (i == 0) {
-      if (threshold >> i & 1) t [i] <== l + x [i] * (e - l);
+      if (c >> i & 1) t [i] <== l + x [i] * (e - l);
       else t [i] <== e + x [i] * (g - e);
     } else {
-      if (threshold >> i & 1) t [i] <== l + x [i] * (t [i - 1] - l);
+      if (c >> i & 1) t [i] <== l + x [i] * (t [i - 1] - l);
       else t [i] <== t [i - 1] + x [i] * (g - t [i - 1]);
     }
   }
